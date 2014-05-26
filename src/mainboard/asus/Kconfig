@@ -47,6 +47,8 @@ config BOARD_ASUS_M4A78_EM
 	bool "M4A78-EM"
 config BOARD_ASUS_M5A88_V
 	bool "M5A88-V"
+config BOARD_ASUS_M5A99FX_PRO_R2
+	bool "M5A99FX-PRO-R2"
 config BOARD_ASUS_MEW_AM
 	bool "MEW-AM"
 config BOARD_ASUS_MEW_VM
@@ -80,6 +82,7 @@ source "src/mainboard/asus/m4a785-m/Kconfig"
 source "src/mainboard/asus/m4a785t-m/Kconfig"
 source "src/mainboard/asus/m4a78-em/Kconfig"
 source "src/mainboard/asus/m5a88-v/Kconfig"
+source "src/mainboard/asus/m5a99fx-pro_r2/Kconfig"
 source "src/mainboard/asus/mew-am/Kconfig"
 source "src/mainboard/asus/mew-vm/Kconfig"
 source "src/mainboard/asus/p2b/Kconfig"
