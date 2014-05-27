@@ -2,6 +2,7 @@
  * This file is part of the coreboot project.
  *
  * Copyright (C) 2012 Advanced Micro Devices, Inc.
+ * Copyright (C) 2014 Edward O'Callaghan <eocallaghan@alterapraxis.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,16 +30,15 @@
 #include <console/loglevel.h>
 #include "cpu/amd/car.h"
 #include "cpu/x86/bist.h"
-#include "superio/smsc/sch4037/sch4037_early_init.c"
-#include "superio/smsc/sio1036/sio1036_early_init.c"
+#include <superio/ite/common.h>
+#include <superio/ite/it8721f/it8721f.h>
 #include "cpu/x86/lapic.h"
 #include "nb_cimx.h"
 #include <sb_cimx.h>
 #include "Platform.h"
 #include <arch/cpu.h>
 
-#define SERIAL_DEV PNP_DEV(CONFIG_SIO_PORT, SMSCSUPERIO_SP1)
-
+#define SERIAL_DEV PNP_DEV(0x2e, IT8721F_SP1)
 
 u32 agesawrapper_amdinitmmio (void);
 u32 agesawrapper_amdinitreset (void);
@@ -49,24 +49,13 @@ u32 agesawrapper_amdinitpost (void);
 u32 agesawrapper_amdinitmid (void);
 
 
-
 void cache_as_ram_main(unsigned long bist, unsigned long cpu_init_detectedx)
 {
 	u32 val;
 
 	if (!cpu_init_detectedx && boot_cpu()) {
 
-		post_code(0x30);
-
-		sch4037_early_init (CONFIG_SIO_PORT);
-
-		/* Detect SMSC SIO1036 LPC Debug Card status */
-		if (detect_sio1036_chip(0x4E)) {
-			/* Found SMSC SIO1036 LPC Debug Card */
-			sio1036_early_init(0x4E);
-		}
-
-		post_code(0x31);
+		ite_enable_serial(SERIAL_DEV, CONFIG_TTYS0_BASE);
 		console_init();
 
 		/*
@@ -148,4 +137,3 @@ void cache_as_ram_main(unsigned long bist, unsigned long cpu_init_detectedx)
 
 	post_code(0x45);  // Should never see this post code.
 }
-

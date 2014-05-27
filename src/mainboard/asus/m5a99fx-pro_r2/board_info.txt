@@ -1,1 +1,6 @@
-Category: eval
+Category: desktop
+Board URL: https://www.asus.com/Motherboards/M5A99FX_PRO_R20/
+ROM package: DIP8
+ROM protocol: SPI
+ROM socketed: y
+Flashrom support: y
